@@ -1,5 +1,5 @@
 from .models import Album, Song
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 def index(request):
     all_albums = Album.objects.all()
     context = {'all_albums':all_albums }
@@ -21,4 +21,5 @@ def favorite(request, album_id):
     else:
         selected_song.is_favorite = True
         selected_song.save()
-        return render(request, 'music/detail.html', {'album': album})
+
+        return redirect('/music/' + album_id + '/')
