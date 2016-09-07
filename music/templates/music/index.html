@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Firstapp</title>
+    <!--loads the path to your static files-->
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'music/css/index.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'music/lib/bootstrap/paper._bootswatch.min.css' %}" type="text/css">
 </head>
 <body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- logo -->
+        <div class="navbar-header">
+            <a href="{% url 'music:index' %}" class="navbar-brand">Vuverr</a>
+        </div>
+    </div>
+</nav>
 {% if all_albums %}
     <ul>
         {% for album in all_albums %}
