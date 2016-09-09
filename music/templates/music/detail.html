@@ -2,36 +2,94 @@
 {% extends 'music/base.html' %}
 {% block title %} Song details {% endblock %}
 {% block body %}
-    {% if error_message %}
-        <p><strong>{{ error_message }}</strong></p>
-    {% endif %}
-    <img src="{{ album.album_logo }}" alt="">
-    <h1>{{ album.album_title }}</h1>
-    <h3> {{ album.artist }}</h3>
+    <div class="container-fluid songs-container">
 
+        <div class="row">
 
-    <form action="{% url 'music:favorite' album.id %}" method="post">
-        {% csrf_token %}
-        {% for song in album.song_set.all %}
-            <input type="radio" id="song{{ forloop.counter }}" name="song" value="{{ song.id }}">
-            <label for="song{{ forloop.counter }}">
-                {{ song.song_title }}
-                {% if song.is_favorite %}
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLQN3v9oyzVg1kD4fCPUVDyEM5RkcGWyPMfjZJyLyVg5wiGyaIcarRtQ"
-                         alt="" style="height:12px;width: 12px;">
+            <div class="container">
 
-                {% endif %}
-            </label>
-            <br>
+                <!-- Left Album Info -->
+                <div class="col-sm-4 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="{% url 'music:detail' album.id %}">
+                                {% if album.album_logo %}
+                                    <img src="{{ album.album_logo }}" class="img-responsive">
+                                {% else %}
+                                    <h3>No image to display</h3>
+                                {% endif %}
+                            </a>
+                            <h1>{{ album.album_title }}
+                                <small>{{ album.genre }}</small>
+                            </h1>
+                            <h2>{{ album.artist }}</h2>
+                        </div>
+                    </div>
+                </div>
 
-        {% endfor %}
-        <input type="submit" value="submit">
+                <!-- Right Song Info -->
+                <div class="col-sm-8 col-md-9">
 
-    </form>
-    <ul style="display:none">
-        {% for song in album.song_set.all %}
-            <li>{{ song.song_title }}-{{ song.file_type }}</li>
-        {% endfor %}
-    </ul>
+                    <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                        <li role="presentation" class="active"><a href="">View All</a></li>
+                        <li role="presentation"><a href="">Add New Song</a></li>
+                    </ul>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <h3>All Songs</h3>
+
+                            {% if error_message %}
+                                <p><strong>{{ error_message }}</strong></p>
+                            {% endif %}
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Audio File</th>
+                                    <th>Favorite</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for song in album.song_set.all %}
+                                    <tr>
+                                        <td>{{ song.song_title }}</td>
+                                        <td>
+                                            <a target="_blank" href="">
+                                                <button type="button" class="btn btn-success btn-xs">
+                                                    <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="" class="btn-favorite"><span
+                                                    class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                        </td>
+                                        <td>
+                                            <form action="" method="post" style="display: inline;">
+
+                                                <input type="hidden" name="song_id" value="{{ song.id }}"/>
+                                                <button type="submit" class="btn btn-danger btn-xs">
+                                                    <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
 {% endblock %}
