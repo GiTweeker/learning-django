@@ -107,7 +107,7 @@
       <column name="artist" sqlType="VARCHAR(250)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <column name="album_title" sqlType="VARCHAR(500)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <column name="genre" sqlType="VARCHAR(100)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
-      <column name="album_logo" sqlType="VARCHAR(1000)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
+      <column name="album_logo" sqlType="VARCHAR(100)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <primary-key columns="id"/>
     </table>
     <table name="music_song" schema="" catalog="" type="TABLE">
